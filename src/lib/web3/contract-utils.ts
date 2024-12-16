@@ -11,10 +11,16 @@ declare global {
     ethereum?: any;
   }
 }
-
+interface Course {
+  web2CourseId: string;
+  name: string;
+  price: string;
+  isActive: boolean;
+  creator: string;
+}
 // 合约地址 - 需要替换为实际部署的地址
-const COURSE_MARKET_ADDRESS = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
-const TOKEN_ADDRESS = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+const COURSE_MARKET_ADDRESS = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+const TOKEN_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 export class Web3Contract {
   private courseMarketContract: CourseMarket | null = null;
@@ -110,6 +116,70 @@ export class Web3Contract {
       throw error;
     }
   }
-}
+  // 添加课程方法
+  async addCourse(web2CourseId: string, name: string, price: string) {
+    if (!this.courseMarketContract || !this.signer) {
+      throw new Error("Contract not initialized");
+    }
 
+    try {
+      // 将价格转换为wei单位
+      const priceInWei = ethers.parseEther(price);
+
+      const tx = await this.courseMarketContract.addCourse(
+        web2CourseId,
+        name,
+        priceInWei
+      );
+
+      await tx.wait();
+      return tx;
+    } catch (error) {
+      console.error("Error adding course:", error);
+      throw error;
+    }
+  }
+  // 在 Web3Contract 类中添加新方法
+  async isContractOwner(): Promise<boolean> {
+    if (!this.courseMarketContract || !this.signer) {
+      throw new Error("Contract not initialized");
+    }
+
+    try {
+      const owner = await this.courseMarketContract.owner();
+      const address = await this.signer.getAddress();
+      return owner.toLowerCase() === address.toLowerCase();
+    } catch (error) {
+      console.error("Error checking contract owner:", error);
+      return false;
+    }
+  }
+  async getCourseList(): Promise<Course[]> {
+    if (!this.courseMarketContract) {
+      throw new Error("Contract not initialized");
+    }
+
+    try {
+      const courseCount = await this.courseMarketContract.courseCount();
+      const courses: Course[] = [];
+
+      for (let i = 1; i <= courseCount; i++) {
+        const course = await this.courseMarketContract.courses(i);
+        courses.push({
+          web2CourseId: course.web2CourseId,
+          name: course.name,
+          price: ethers.formatEther(course.price),
+          isActive: course.isActive,
+          creator: course.creator,
+        });
+      }
+
+      return courses;
+    } catch (error) {
+      console.error("Error getting course list:", error);
+      throw error;
+    }
+  }
+}
+export type { Course };
 export const web3Contract = new Web3Contract();
