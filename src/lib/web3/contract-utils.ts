@@ -19,8 +19,8 @@ interface Course {
   creator: string;
 }
 // 合约地址 - 需要替换为实际部署的地址
-const COURSE_MARKET_ADDRESS = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
-const TOKEN_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const COURSE_MARKET_ADDRESS = "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318";
+const TOKEN_ADDRESS = "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6";
 
 export class Web3Contract {
   private courseMarketContract: CourseMarket | null = null;
