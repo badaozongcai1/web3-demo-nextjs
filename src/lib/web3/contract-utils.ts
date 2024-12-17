@@ -63,7 +63,7 @@ export class Web3Contract {
     try {
       const tx = await this.tokenContract.approve(
         COURSE_MARKET_ADDRESS,
-        ethers.parseEther(amount)
+        ethers.getBigInt(amount)
       );
       await tx.wait();
       return tx;
@@ -110,7 +110,14 @@ export class Web3Contract {
     try {
       const address = await this.signer.getAddress();
       const balance = await this.tokenContract.balanceOf(address);
-      return ethers.formatEther(balance);
+      // 这个函数默认会按 18 位小数来格式化（相当于除以 10^18）。
+      // return ethers.formatEther(balance);
+      // 直接返回 balance 的字符串形式，不需要 formatEther
+      return balance.toString();
+
+      // 或者如果你想确保考虑 decimals
+      // const decimals = await this.tokenContract.decimals();
+      // return balance.div(BigNumber.from(10).pow(decimals)).toString();
     } catch (error) {
       console.error("Error getting token balance:", error);
       throw error;
@@ -124,12 +131,13 @@ export class Web3Contract {
 
     try {
       // 将价格转换为wei单位
-      const priceInWei = ethers.parseEther(price);
+      // const priceInWei = ethers.parseEther(price);
+      const priceInt = ethers.getBigInt(price);
 
       const tx = await this.courseMarketContract.addCourse(
         web2CourseId,
         name,
-        priceInWei
+        priceInt
       );
 
       await tx.wait();
@@ -165,10 +173,12 @@ export class Web3Contract {
 
       for (let i = 1; i <= courseCount; i++) {
         const course = await this.courseMarketContract.courses(i);
+        console.log(course.price);
         courses.push({
           web2CourseId: course.web2CourseId,
           name: course.name,
-          price: ethers.formatEther(course.price),
+          // price: ethers.formatEther(course.price),
+          price: course.price.toString(),
           isActive: course.isActive,
           creator: course.creator,
         });

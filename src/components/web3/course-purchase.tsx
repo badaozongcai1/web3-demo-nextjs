@@ -34,6 +34,8 @@ export default function CoursePurchase({
           web3Contract.getTokenBalance(),
         ]);
         setHasPurchased(status);
+        console.log(balance);
+        
         setTokenBalance(balance);
       } catch (err) {
         console.error("Error initializing:", err);
