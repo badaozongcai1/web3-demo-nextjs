@@ -6,7 +6,7 @@ export default function Home() {
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-8">
-            面向开发者的在线学习平台
+            面向Web3开发者的在线学习平台
           </h1>
           <p className="text-xl text-gray-600 mb-12">
             使用 Web3 钱包登录，开启您的学习之旅
