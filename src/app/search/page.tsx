@@ -2,57 +2,128 @@
 
 import { useSearchParams } from 'next/navigation';
 import { Star } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { web3Contract, type Course } from "@/lib/web3/contract-utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/hooks/use-toast"
+import { Toaster } from "@/components/ui/toaster";
 
-interface Course {
-  id: number;
-  title: string;
-  author: string;
-  rating: number;
-  reviews: number;
-  duration: string;
-  lessons: number;
-  level: string;
-  tags: string[];
-  price: string;
+interface CourseData extends Course {
+  hasPurchased?: boolean;
 }
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q');
+  const { toast } = useToast();
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [courses, setCourses] = useState<CourseData[]>([]);
+  const [tokenBalance, setTokenBalance] = useState<string>('0');
+  const [isOwner, setIsOwner] = useState(false);
   const [filters, setFilters] = useState({
-    rating: null as number | null,
-    language: null as string | null,
+    price: null as number | null,
+    purchased: false
   });
 
-  // 模拟课程数据
-  const [courses] = useState<Course[]>([
-    {
-      id: 1,
-      title: 'Web3 开发完全指南',
-      author: 'John Doe',
-      rating: 4.6,
-      reviews: 50219,
-      duration: '40.5小时',
-      lessons: 544,
-      level: '高级',
-      tags: ['热门课程'],
-      price: 'US$149.99'
-    },
-    {
-      id: 2,
-      title: 'DeFi 实战开发',
-      author: 'Jane Smith',
-      rating: 4.8,
-      reviews: 12350,
-      duration: '35小时',
-      lessons: 420,
-      level: '中级',
-      tags: ['热门课程', '新课'],
-      price: 'US$129.99'
-    },
-  ]);
+  // 连接钱包并获取数据
+  const initializeWeb3 = async () => {
+    try {
+      await web3Contract.connect();
+      await Promise.all([
+        fetchCourses(),
+        fetchTokenBalance(),
+        checkOwnerStatus()
+      ]);
+    } catch (error) {
+      console.error('Failed to initialize Web3:', error);
+      toast({
+        variant: "destructive",
+        title: "错误",
+        description: "连接钱包失败，请确保已安装 MetaMask"
+      });
+    }
+  };
+
+  // 获取课程列表
+  const fetchCourses = async () => {
+    try {
+      setIsLoading(true);
+      const courseList = await web3Contract.getCourseList();
+      
+      // 检查每个课程的购买状态
+      const coursesWithPurchaseStatus = await Promise.all(
+        courseList.map(async (course) => {
+          const hasPurchased = await web3Contract.hasCourse(course.web2CourseId);
+          return { ...course, hasPurchased };
+        })
+      );
+      
+      setCourses(coursesWithPurchaseStatus);
+    } catch (error) {
+      console.error('Failed to fetch courses:', error);
+      toast({
+        variant: "destructive",
+        title: "错误",
+        description: "获取课程列表失败"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 获取代币余额
+  const fetchTokenBalance = async () => {
+    try {
+      const balance = await web3Contract.getTokenBalance();
+      setTokenBalance(balance);
+    } catch (error) {
+      console.error('Failed to fetch token balance:', error);
+    }
+  };
+
+  // 检查是否是合约拥有者
+  const checkOwnerStatus = async () => {
+    try {
+      const ownerStatus = await web3Contract.isContractOwner();
+      setIsOwner(ownerStatus);
+    } catch (error) {
+      console.error('Failed to check owner status:', error);
+    }
+  };
+
+  // 购买课程
+  const handlePurchaseCourse = async (course: CourseData) => {
+    try {
+      setIsLoading(true);
+      // 首先批准代币转账
+      await web3Contract.approveTokens(course.price);
+      // 然后购买课程
+      await web3Contract.purchaseCourse(course.web2CourseId);
+      toast({
+        title: "购买成功",
+        description: "课程已添加到你的账户"
+      });
+      // 刷新数据
+      await Promise.all([fetchCourses(), fetchTokenBalance()]);
+    } catch (error) {
+      console.error('Failed to purchase course:', error);
+      toast({
+        variant: "destructive",
+        title: "错误",
+        description: "购买课程失败"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    initializeWeb3();
+  }, []);
 
   const renderStars = (rating: number) => {
     return (
@@ -73,54 +144,51 @@ export default function SearchPage() {
     );
   };
 
+  // 过滤课程
   const filteredCourses = courses.filter(course => {
-    if (filters.rating && course.rating < filters.rating) return false;
+    if (filters.purchased && !course.hasPurchased) return false;
     return true;
   });
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>账户余额</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-mono">{tokenBalance} YD</div>
+        </CardContent>
+      </Card>
+
       <div className="flex gap-8">
         {/* 过滤器侧边栏 */}
-        <div className="w-64 flex-shrink-0">
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            <h3 className="font-bold mb-4">评分</h3>
-            <div className="space-y-2">
-              {[4.5, 4.0, 3.5, 3.0].map((rating) => (
-                <label key={rating} className="flex items-center">
+        <Card className="w-64 flex-shrink-0 h-fit">
+          <CardHeader>
+            <CardTitle>筛选</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="purchased">
                   <input
-                    type="radio"
-                    name="rating"
-                    className="mr-2"
-                    onChange={() =>
-                      setFilters((prev) => ({ ...prev, rating }))
-                    }
-                  />
-                  {rating} 及以上
-                </label>
-              ))}
-            </div>
-
-            <h3 className="font-bold mt-6 mb-4">语言</h3>
-            <div className="space-y-2">
-              {['English', 'Chinese'].map((lang) => (
-                <label key={lang} className="flex items-center">
-                  <input
+                    id="purchased"
                     type="checkbox"
                     className="mr-2"
+                    checked={filters.purchased}
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
-                        language: e.target.checked ? lang : null
+                        purchased: e.target.checked,
                       }))
                     }
                   />
-                  {lang}
-                </label>
-              ))}
+                  仅显示已购买
+                </Label>
+              </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* 课程列表 */}
         <div className="flex-1">
@@ -128,47 +196,71 @@ export default function SearchPage() {
             {query ? `"${query}" 的搜索结果` : '所有课程'} ({filteredCourses.length})
           </h2>
           
-          <div className="space-y-6">
-            {filteredCourses.map((course) => (
-              <div
-                key={course.id}
-                className="bg-white p-6 rounded-lg shadow-sm flex gap-6"
-              >
-                <div className="w-48 h-48 bg-gray-100 rounded-lg flex-shrink-0">
-                  {/* 课程缩略图 */}
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-2">{course.title}</h3>
-                  <p className="text-gray-600 mb-2">作者: {course.author}</p>
-                  <div className="flex items-center gap-2 mb-2">
-                    {renderStars(course.rating)}
-                    <span className="text-gray-600">
-                      ({course.reviews.toLocaleString()} 评价)
-                    </span>
-                  </div>
-                  <p className="text-gray-600 mb-2">
-                    总共 {course.duration} • {course.lessons} 个讲座
-                  </p>
-                  <div className="flex gap-2 mb-4">
-                    <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded">
-                      {course.level}
-                    </span>
-                    {course.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="text-xl font-bold">{course.price}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="space-y-6">
+              {[1, 2, 3].map((i) => (
+                <Card key={i}>
+                  <CardContent className="p-6">
+                    <div className="flex gap-6">
+                      <Skeleton className="w-48 h-48 rounded-lg" />
+                      <div className="flex-1 space-y-4">
+                        <Skeleton className="h-8 w-2/3" />
+                        <Skeleton className="h-4 w-1/3" />
+                        <Skeleton className="h-4 w-1/4" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {filteredCourses.map((course) => (
+                <Card key={course.web2CourseId}>
+                  <CardContent className="p-6">
+                    <div className="flex gap-6">
+                      <div className="w-48 h-48 bg-gray-100 rounded-lg flex-shrink-0 flex items-center justify-center">
+                        <span className="text-gray-500">课程封面</span>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold mb-2">{course.name}</h3>
+                        <div className="flex items-center gap-2 mb-4">
+                          {renderStars(4.5)}
+                        </div>
+                        <div className="mb-4">
+                          <span className={`px-2 py-1 rounded ${
+                            course.isActive 
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-gray-100 text-gray-800'
+                          }`}>
+                            {course.isActive ? '可购买' : '已下架'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <div className="text-xl font-bold">{course.price} YD</div>
+                          {course.hasPurchased ? (
+                            <Button variant="secondary" disabled>
+                              已购买
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={() => handlePurchaseCourse(course)}
+                              disabled={isLoading || !course.isActive}
+                            >
+                              购买课程
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }

@@ -15,10 +15,10 @@ const Header = () => {
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             <Link href="/courses" className="text-gray-600 hover:text-gray-900">
-              课程
+              测试页面
             </Link>
-            <Link href="/topics" className="text-gray-600 hover:text-gray-900">
-              主题
+            <Link href="/addCourse" className="text-gray-600 hover:text-gray-900">
+              新增课程
             </Link>
           </nav>
 
