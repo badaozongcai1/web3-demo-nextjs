@@ -88,7 +88,12 @@ export function CourseList({ courses, isLoading, onPurchase }: CourseListProps) 
           <CardContent className="p-6">
             <div className="flex gap-6">
               <div className="w-48 h-48 bg-gray-100 rounded-lg flex-shrink-0 flex items-center justify-center">
-                <span className="text-gray-500">课程封面</span>
+            
+                <img 
+                    src="/demo.svg" 
+                    alt="课程示例图片" 
+                    className="w-full rounded-lg mb-4 object-cover"
+                  />
               </div>
               <div className="flex-1">
                 <h3 className="text-xl font-bold mb-2">{course.name}</h3>

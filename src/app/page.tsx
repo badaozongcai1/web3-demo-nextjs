@@ -37,14 +37,18 @@ export default function Home() {
               {/* Course Cards */}
               {[1, 2, 3].map((i) => (
                 <div key={i} className="bg-white rounded-lg shadow-lg p-6">
-                  <div className="aspect-video bg-gray-200 rounded-lg mb-4"></div>
+                  <img 
+                    src="/demo.svg" 
+                    alt="课程示例图片" 
+                    className="w-full rounded-lg mb-4 object-cover"
+                  />
                   <h3 className="font-bold text-lg mb-2">Web3 开发课程 {i}</h3>
                   <p className="text-gray-600 mb-4">
                     学习如何构建去中心化应用和智能合约
                   </p>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-500">40小时课程</span>
-                    <span className="font-bold">¥999</span>
+                    <span className="font-bold">999 YD</span>
                   </div>
                 </div>
               ))}

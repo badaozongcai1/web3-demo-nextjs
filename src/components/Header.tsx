@@ -25,7 +25,8 @@ const Header = () => {
 
           {/* Right Section */}
           <div className="flex items-center space-x-4">
-            <ConnectButton />
+            {/* <ConnectButton /> */}
+            连接钱包
           </div>
         </div>
       </div>
