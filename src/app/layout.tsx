@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="min-h-screen flex flex-col">
           <Header />
-          {children}
+          <main>{children}</main>
           <footer className="mt-auto py-8 bg-gray-50">
             <div className="container mx-auto px-4 text-center text-gray-600">
               © 2024 LearnWeb3. All rights reserved.
