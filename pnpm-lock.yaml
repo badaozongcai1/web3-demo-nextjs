@@ -23,6 +23,12 @@ importers:
       '@web3-react/core':
         specifier: ^8.2.3
         version: 8.2.3(@types/react@19.0.1)(react@19.0.0)
+      '@web3-react/metamask':
+        specifier: ^8.2.4
+        version: 8.2.4(@types/react@19.0.1)(react@19.0.0)
+      '@web3-react/types':
+        specifier: ^8.2.3
+        version: 8.2.3(@types/react@19.0.1)(react@19.0.0)
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
@@ -337,6 +343,10 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@metamask/detect-provider@1.2.0':
+    resolution: {integrity: sha512-ocA76vt+8D0thgXZ7LxFPyqw3H7988qblgzddTDA6B8a/yU0uKV42QR/DhA+Jh11rJjxW0jKvwb5htA6krNZDQ==}
+    engines: {node: '>= 10'}
 
   '@next/env@15.1.0':
     resolution: {integrity: sha512-UcCO481cROsqJuszPPXJnb7GGuLq617ve4xuAyyNG4VSSocJNtMU5Fsx+Lp6mlN8c7W58aZLc5y6D/2xNmaK+w==}
@@ -679,6 +689,9 @@ packages:
     resolution: {integrity: sha512-0ezmRKhqQpoa9ct2/3erg60zBXfC/f/liYR1mfSGKtIroRkLnPARigZSV6pI+fi8bhfGJ0RKtFWyTCCWZzdq1w==}
     peerDependencies:
       react: '>=16.8'
+
+  '@web3-react/metamask@8.2.4':
+    resolution: {integrity: sha512-4yoqDgvcB0QKUGSk00/fUipA3z5rOXcQYAwE0CABPa5lbTRAIm5i8F0Gj8UW7QO0pQus4UtjX0+JxWdclB7UrA==}
 
   '@web3-react/store@8.2.3':
     resolution: {integrity: sha512-qUJQ5pDsYYDra+/+glq2BmIS43HYAiEZ22sLLVh6E75WiZKRNOOqUxBDPe33KTIn718DLt51j+wd2FT+oT/kJQ==}
@@ -2561,6 +2574,8 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@metamask/detect-provider@1.2.0': {}
+
   '@next/env@15.1.0': {}
 
   '@next/eslint-plugin-next@15.1.0':
@@ -2886,6 +2901,15 @@ snapshots:
       - bufferutil
       - immer
       - utf-8-validate
+
+  '@web3-react/metamask@8.2.4(@types/react@19.0.1)(react@19.0.0)':
+    dependencies:
+      '@metamask/detect-provider': 1.2.0
+      '@web3-react/types': 8.2.3(@types/react@19.0.1)(react@19.0.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - immer
+      - react
 
   '@web3-react/store@8.2.3(@types/react@19.0.1)(react@19.0.0)':
     dependencies:
