@@ -1,5 +1,5 @@
-import AddCourse from "@/components/web3/add-course";
-import CourseList from "@/components/web3/course-list";
+import AddCourse from "@/components/course/demo/add-course";
+import CourseList from "@/components/course/demo/course-list";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function Home() {

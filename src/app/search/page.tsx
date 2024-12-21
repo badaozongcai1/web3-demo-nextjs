@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 import { web3Contract, type Course } from '@/lib/web3/contract-utils';
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
-import { CourseFilter } from '@/components/web3/CourseFilter';
-import { CourseList } from '@/components/web3/CourseLists';
+import { CourseFilter } from '@/components/course/CourseFilter';
+import { CourseList } from '@/components/course/CourseLists';
 
 interface CourseData extends Course {
   hasPurchased?: boolean;

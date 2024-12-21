@@ -1,7 +1,7 @@
 import React from 'react';
 import { Search } from 'lucide-react';
 import Link from 'next/link';
-import { ConnectButton } from './web3/ConnectButton';
+import { ConnectButton } from './course/ConnectButton';
 
 const Header = () => {
   return (

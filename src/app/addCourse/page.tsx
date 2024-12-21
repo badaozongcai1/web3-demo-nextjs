@@ -1,4 +1,4 @@
-import AddCourseComponent from "@/components/web3/add-course";
+import AddCourseComponent from "@/components/course/demo/add-course";
 
 export default function AddCoursePage() {
   return (
