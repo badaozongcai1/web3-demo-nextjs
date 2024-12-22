@@ -1,7 +1,8 @@
+"use client"
 import React from 'react';
 import { Search } from 'lucide-react';
 import Link from 'next/link';
-import { ConnectButton } from './course/ConnectButton';
+import { WalletButton } from './web3/WalletButton';
 
 const Header = () => {
   return (
@@ -25,8 +26,7 @@ const Header = () => {
 
           {/* Right Section */}
           <div className="flex items-center space-x-4">
-            {/* <ConnectButton /> */}
-            连接钱包
+            <WalletButton />
           </div>
         </div>
       </div>

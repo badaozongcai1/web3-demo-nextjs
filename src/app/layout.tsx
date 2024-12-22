@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
+import { Web3Provider } from '@/components/web3/Web3Provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,13 +20,15 @@ export default function RootLayout({
     <html lang="zh">
       <body className={inter.className}>
         <div className="min-h-screen flex flex-col">
-          <Header />
-          <main>{children}</main>
-          <footer className="mt-auto py-8 bg-gray-50">
-            <div className="container mx-auto px-4 text-center text-gray-600">
-              © 2024 LearnWeb3. All rights reserved.
-            </div>
-          </footer>
+          <Web3Provider>
+            <Header />
+            <main>{children}</main>
+            <footer className="mt-auto py-8 bg-gray-50">
+              <div className="container mx-auto px-4 text-center text-gray-600">
+                © 2024 LearnWeb3. All rights reserved.
+              </div>
+            </footer>
+          </Web3Provider>
         </div>
       </body>
     </html>
