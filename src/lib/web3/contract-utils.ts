@@ -33,6 +33,7 @@ export class Web3Contract {
     }
 
     try {
+      //任何遵循 EIP-1193 标准的以太坊钱包
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const provider = new ethers.BrowserProvider(window.ethereum);
       this.signer = await provider.getSigner();
@@ -185,6 +186,26 @@ export class Web3Contract {
       }
 
       return courses;
+    } catch (error) {
+      console.error("Error getting course list:", error);
+      throw error;
+    }
+  }
+  async getCourseListV2(): Promise<Course[]> {
+    if (!this.courseMarketContract) {
+      throw new Error("Contract not initialized");
+    }
+
+    try {
+      // 单次请求获取所有课程
+      const courses = await this.courseMarketContract.getAllCourses();
+      return courses.map((course) => ({
+        web2CourseId: course.web2CourseId,
+        name: course.name,
+        price: course.price.toString(),
+        isActive: course.isActive,
+        creator: course.creator,
+      }));
     } catch (error) {
       console.error("Error getting course list:", error);
       throw error;

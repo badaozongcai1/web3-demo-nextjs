@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225">
+  <defs>
+    <!-- 霓虹效果 -->
+    <filter id="neon">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite operator="over" in="blur"/>
+    </filter>
+    <!-- 网格渐变 -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#6366f1" stroke-width="0.5" opacity="0.2"/>
+    </pattern>
+    <!-- 元素渐变 -->
+    <linearGradient id="cyber" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 背景网格 -->
+  <rect width="400" height="225" fill="#0f172a"/>
+  <rect width="400" height="225" fill="url(#grid)"/>
+
+  <!-- 区块链连接线 -->
+  <g stroke="url(#cyber)" stroke-width="1" opacity="0.6">
+    <path d="M50,50 L150,100 L250,75 L350,125" fill="none">
+      <animate attributeName="stroke-dasharray" values="0,1000;1000,0" dur="3s" repeatCount="indefinite"/>
+    </path>
+    <path d="M50,150 L150,125 L250,150 L350,100" fill="none">
+      <animate attributeName="stroke-dasharray" values="0,1000;1000,0" dur="3s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- 区块元素 -->
+  <g transform="translate(100,60)">
+    <rect x="0" y="0" width="40" height="40" fill="none" stroke="url(#cyber)" stroke-width="2" rx="5">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <path d="M10,20 L30,20 M20,10 L20,30" stroke="#06b6d4" stroke-width="2" filter="url(#neon)"/>
+  </g>
+
+  <g transform="translate(260,90)">
+    <rect x="0" y="0" width="40" height="40" fill="none" stroke="url(#cyber)" stroke-width="2" rx="5">
+      <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    <circle cx="20" cy="20" r="8" fill="none" stroke="#06b6d4" stroke-width="2" filter="url(#neon)"/>
+  </g>
+
+  <!-- 数字雨效果 -->
+  <g fill="#06b6d4" font-family="monospace" opacity="0.8">
+    <text x="50" y="100" filter="url(#neon)">10</text>
+    <text x="200" y="80" filter="url(#neon)">01</text>
+    <text x="320" y="150" filter="url(#neon)">11</text>
+  </g>
+
+  <!-- 六边形装饰 -->
+  <path d="M320,40 L335,50 L335,70 L320,80 L305,70 L305,50 Z" fill="none" stroke="#06b6d4" stroke-width="2" filter="url(#neon)">
+    <animate attributeName="stroke-dasharray" values="0,1000;1000,0" dur="4s" repeatCount="indefinite"/>
+  </path>
+
+  <!-- 标题 -->
+  <text x="200" y="180" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="24" fill="#fff" filter="url(#neon)">
+    WEB3.0
+  </text>
+  <text x="200" y="205" text-anchor="middle" font-family="Arial" font-size="16" fill="#94a3b8">开发课程</text>
+</svg>
