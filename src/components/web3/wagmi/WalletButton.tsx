@@ -7,16 +7,44 @@ import {
   useChainId,
   useConfig,
 } from "wagmi";
+import { type Address } from "viem";
 import { modal } from "./config/appkit";
 import { ChevronDown } from "lucide-react";
+// 使用 wagmi 的类型
+interface TokenConfig {
+  address: Address;
+  symbol: string;
+  decimals: number;
+}
 
+// 定义支持的代币配置
+const TOKEN_CONFIG: Record<number, TokenConfig> = {
+  // 以太坊主网
+  1: {
+    // 代币合约地址
+    address: process.env.NEXT_PUBLIC_SEPOLIA_TOKEN_ADDRESS as Address, // 替换为你的代币合约地址
+    symbol: "YD", // 代币符号
+    decimals: 0, // 代币精度
+  },
+  // Sepolia 测试网
+  11155111: {
+    address: process.env.NEXT_PUBLIC_SEPOLIA_TOKEN_ADDRESS as Address, // 替换为测试网上的代币合约地址
+    symbol: "YD",
+    decimals: 0,
+  },
+};
 export function WalletButton() {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
+  const chainId = useChainId();
   const { data: balance } = useBalance({
     address: address,
   });
-  const chainId = useChainId();
+  // 获取自定义代币余额
+  const { data: tokenBalance } = useBalance({
+    address: address,
+    token: chainId ? TOKEN_CONFIG[chainId]?.address : undefined, // 根据当前链 ID 获取对应的代币地址
+  });
   const config = useConfig();
   const currentChain = config.chains.find((chain) => chain.id === chainId);
 
@@ -58,13 +86,21 @@ export function WalletButton() {
                 ) : null}
               </div>
             )}
-            <span className="text-sm">
+            <span className="text-sm text-gray-500">
               {balance
                 ? `${parseFloat(balance?.formatted).toFixed(3)} ${
                     balance?.symbol
                   }`
                 : "0.00"}
             </span>
+            {/* 显示自定义代币余额 */}
+            {tokenBalance && (
+              <span className="text-sm text-gray-500">
+                {`${parseFloat(tokenBalance?.formatted).toFixed(0)} ${
+                  tokenBalance?.symbol
+                }`}
+              </span>
+            )}
           </div>
           <ChevronDown className="w-4 h-4 text-gray-600" />
         </Button>
