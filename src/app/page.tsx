@@ -106,7 +106,7 @@ export default function Home() {
                 >
                   <div className="relative">
                     <img
-                      src="/demo2.svg"
+                      src="/demo.svg"
                       alt={course.title}
                       className="w-full h-48 rounded-lg mb-4 object-cover"
                     />

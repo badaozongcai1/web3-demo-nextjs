@@ -1,8 +1,8 @@
-"use client"
-import React from 'react';
-import { Search } from 'lucide-react';
-import Link from 'next/link';
-import { WalletButton } from './web3/WalletButton';
+"use client";
+import React from "react";
+import { Search } from "lucide-react";
+import Link from "next/link";
+import { WalletButton } from "./web3/wagmi/WalletButton";
 
 const Header = () => {
   return (
@@ -19,7 +19,10 @@ const Header = () => {
             <Link href="/courses" className="text-gray-600 hover:text-gray-900">
               测试页面
             </Link>
-            <Link href="/addCourse" className="text-gray-600 hover:text-gray-900">
+            <Link
+              href="/addCourse"
+              className="text-gray-600 hover:text-gray-900"
+            >
               新增课程
             </Link>
           </nav>
