@@ -11,6 +11,7 @@ import { type Address } from "viem";
 import { modal } from "./config/appkit";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import Jazzicon from "@/components/web3/Jazzicon";
 // 使用 wagmi 的类型
 interface TokenConfig {
   address: Address;
@@ -116,7 +117,7 @@ export function WalletButton() {
           onClick={handleOpenAccountModal}
           className="rounded-none h-10 flex items-center gap-2 rounded-r-xl bg-gradient-to-r from-violet-100 to-purple-100 hover:from-violet-200 hover:to-purple-200 pl-3 pr-4 -ml-px shadow-sm"
         >
-          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-violet-400 to-purple-400" />
+          <Jazzicon address={address} size={20} />
           <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-purple-600">
             {formatAddress(address)}
           </span>

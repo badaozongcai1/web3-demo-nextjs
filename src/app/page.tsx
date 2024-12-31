@@ -4,7 +4,7 @@ import { Search, Sparkles, Clock, Users, BookOpen } from "lucide-react";
 
 export default function Home() {
   const [searchFocus, setSearchFocus] = useState(false);
-  const [hoveredCard, setHoveredCard] = useState(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const features = [
     { icon: Clock, text: "40+ 小时精品内容" },
