@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import { Web3Provider } from "@/components/web3/wagmi/Web3Provider";
+
+import AnimatedBackground from "@/components/dynamicEffect/AnimatedBackground";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -22,6 +24,7 @@ export default function RootLayout({
         <Web3Provider>
           <div className="min-h-screen flex flex-col">
             <Header />
+            <AnimatedBackground duration={3000} />
             {children}
             <footer className="mt-auto py-8 bg-gray-50">
               <div className="container mx-auto px-4 text-center text-gray-600">
