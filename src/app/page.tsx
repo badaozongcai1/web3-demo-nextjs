@@ -37,12 +37,20 @@ export default function Home() {
       price: "777 YD",
       tags: ["NFT", "React"],
     },
+    {
+      id: 4,
+      title: "Web3 开发课程",
+      description: "从原理到实战",
+      duration: "10小时",
+      price: "999 YD",
+      tags: ["Web3", "实战"],
+    },
   ];
 
   return (
     <main className="flex-1 bg-gradient-to-b from-blue-50 to-white">
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="container mx-auto px-4 py-16 max-w-7xl">
+        <div className="max-w-6xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-full text-blue-600 text-sm mb-8">
             <Sparkles size={16} />
             <span>现已支持区块链认证证书</span>
@@ -89,24 +97,21 @@ export default function Home() {
             </div>
           </form>
 
-          <div className="mt-24">
+          <div className="mt-24 w-full">
             <h2 className="text-3xl font-bold mb-8">热门课程</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {" "}
+              {/* 改为 4 列 */}
               {courses.map((course) => (
                 <div
                   key={course.id}
-                  className={`bg-white rounded-lg p-6 transition-all duration-300 cursor-pointer
-                    ${
-                      hoveredCard === course.id
-                        ? "shadow-xl -translate-y-2"
-                        : "shadow-lg"
-                    }`}
+                  className="bg-white rounded-lg p-6 transition-all duration-300 cursor-pointer flex flex-col h-full" // 添加 flex flex-col h-full
                   onMouseEnter={() => setHoveredCard(course.id)}
                   onMouseLeave={() => setHoveredCard(null)}
                 >
                   <div className="relative">
                     <img
-                      src="/demo.svg"
+                      src="https://i.seadn.io/gcs/files/6d5f2df1cb886b2b0cfb8231bcaceb75.jpg?auto=format&dpr=1&h=500&fr=1"
                       alt={course.title}
                       className="w-full h-48 rounded-lg mb-4 object-cover"
                     />
@@ -115,32 +120,39 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <h3 className="font-bold text-lg mb-2">{course.title}</h3>
-                  <p className="text-gray-600 mb-4">{course.description}</p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {course.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
-                      >
-                        {tag}
+                  <div className="flex flex-col flex-grow">
+                    {" "}
+                    {/* 添加 flex 容器 */}
+                    <h3 className="font-bold text-lg mb-2">{course.title}</h3>
+                    <p className="text-gray-600 mb-4 flex-grow">
+                      {course.description}
+                    </p>{" "}
+                    {/* 添加 flex-grow */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {course.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex justify-between items-center text-sm text-gray-500 mt-auto">
+                      {" "}
+                      {/* 添加 mt-auto */}
+                      <span className="flex items-center gap-1">
+                        <Clock size={16} />
+                        {course.duration}
                       </span>
-                    ))}
-                  </div>
-
-                  <div className="flex justify-between items-center text-sm text-gray-500">
-                    <span className="flex items-center gap-1">
-                      <Clock size={16} />
-                      {course.duration}
-                    </span>
-                    <button className="text-blue-500 hover:text-blue-600 font-medium">
-                      了解详情 →
-                    </button>
+                      <button className="text-blue-500 hover:text-blue-600 font-medium">
+                        了解详情 →
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
-            </div>
+            </div>{" "}
           </div>
         </div>
       </div>

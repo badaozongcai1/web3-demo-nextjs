@@ -34,8 +34,8 @@ const Header = () => {
           <div className="flex items-center space-x-8">
             <nav className="flex items-center space-x-6">
               {[
-                // { href: "/courses", label: "测试页面" },
                 { href: "/addCourse", label: "新增课程" },
+                { href: "/courses", label: "我的课程" },
               ].map((item, index) => (
                 <motion.div
                   key={item.href}

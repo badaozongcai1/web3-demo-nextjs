@@ -71,7 +71,7 @@ export function WalletButton() {
           variant="ghost"
           size="sm"
           onClick={handleOpenNetworkModal}
-          className="relative h-10 flex items-center gap-2 rounded-l-xl bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 pr-3 pl-4 shadow-sm"
+          className="rounded-none relative h-10 flex items-center gap-2 rounded-l-xl bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 pr-3 pl-4 shadow-sm"
         >
           <div className="flex items-center gap-3">
             {currentChain && (
@@ -114,7 +114,7 @@ export function WalletButton() {
           variant="ghost"
           size="sm"
           onClick={handleOpenAccountModal}
-          className="h-10 flex items-center gap-2 rounded-r-xl bg-gradient-to-r from-violet-50 to-purple-50 hover:from-violet-100 hover:to-purple-100 pl-3 pr-4 -ml-px shadow-sm"
+          className="rounded-none h-10 flex items-center gap-2 rounded-r-xl bg-gradient-to-r from-violet-100 to-purple-100 hover:from-violet-200 hover:to-purple-200 pl-3 pr-4 -ml-px shadow-sm"
         >
           <div className="w-2 h-2 rounded-full bg-gradient-to-r from-violet-400 to-purple-400" />
           <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-purple-600">
