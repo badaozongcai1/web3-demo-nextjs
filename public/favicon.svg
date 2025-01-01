@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- 背景圆角矩形 -->
+  <rect width="32" height="32" rx="6" fill="#8A2BE2"/>
+  
+  <!-- L3 文本 -->
+  <text x="50%" y="50%" 
+        font-family="Arial, sans-serif" 
+        font-weight="bold"
+        font-size="16"
+        fill="white"
+        text-anchor="middle"
+        dominant-baseline="middle">L3</text>
+</svg>

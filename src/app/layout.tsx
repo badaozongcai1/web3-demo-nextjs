@@ -6,11 +6,18 @@ import Header from "@/components/Header";
 import { Web3Provider } from "@/components/web3/wagmi/Web3Provider";
 
 import AnimatedBackground from "@/components/dynamicEffect/AnimatedBackground";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LearnWeb3 - Web3 学习平台",
   description: "使用 Web3 钱包登录的在线学习平台",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" }, // SVG版本
+      // { url: "/favicon.ico" }, // ICO版本作为后备
+    ],
+  },
 };
 
 export default function RootLayout({
