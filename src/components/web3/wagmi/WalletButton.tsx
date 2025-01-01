@@ -78,11 +78,14 @@ export function WalletButton() {
             {currentChain && (
               <div className="w-6 h-6 shadow-sm rounded-full overflow-hidden">
                 {currentChain.id === 1 ? (
-                  <img
-                    src="data:image/png;base64,..." // 原有的 base64
-                    alt="Ethereum"
-                    className="w-full h-full object-cover"
-                  />
+                  // <img
+                  //   src="data:image/png;base64,..." // 原有的 base64
+                  //   alt="Ethereum"
+                  //   className="w-full h-full object-cover"
+                  // />
+                  <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                    <span className="text-xs font-medium">E</span>
+                  </div>
                 ) : currentChain.id === 11155111 ? (
                   <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                     <span className="text-xs font-medium">S</span>

@@ -64,16 +64,7 @@ export default function Home() {
             使用 Web3 钱包登录，开启您的学习之旅
           </p>
 
-          <div className="flex justify-center gap-8 mb-16">
-            {features.map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-2 text-gray-600">
-                <Icon size={20} />
-                <span>{text}</span>
-              </div>
-            ))}
-          </div>
-
-          <form action="/search" className="max-w-2xl mx-auto">
+          <form action="/search" className="max-w-3xl mx-auto my-10">
             <div
               className={`flex gap-2 transition-transform duration-300 ${
                 searchFocus ? "scale-105" : ""
@@ -96,6 +87,15 @@ export default function Home() {
               </button>
             </div>
           </form>
+
+          <div className="flex justify-center gap-8 mb-16">
+            {features.map(({ icon: Icon, text }) => (
+              <div key={text} className="flex items-center gap-2 text-gray-600">
+                <Icon size={20} />
+                <span>{text}</span>
+              </div>
+            ))}
+          </div>
 
           <div className="mt-24 w-full">
             <h2 className="text-3xl font-bold mb-8">热门课程</h2>

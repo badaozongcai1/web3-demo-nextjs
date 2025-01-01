@@ -7,8 +7,8 @@ import { mainnet, sepolia } from "@reown/appkit/networks";
 const metadata = {
   name: "LearnWeb3",
   description: "Web3 学习平台",
-  url: "https://your-domain.com", // 需要匹配你的域名
-  icons: ["https://your-domain.com/icon.png"], // 需要替换为你的图标
+  url: "http://localhost:3000", // 需要匹配你的域名
+  icons: ["http://localhost:3000/main.png"], // 需要替换为你的图标
 };
 
 // 创建 modal
