@@ -105,7 +105,7 @@ export default function Home() {
               {courses.map((course) => (
                 <div
                   key={course.id}
-                  className="bg-white rounded-lg p-6 transition-all duration-300 cursor-pointer flex flex-col h-full" // 添加 flex flex-col h-full
+                  className="bg-white rounded-lg p-6 transition-all duration-300 cursor-pointer flex flex-col h-full hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] hover:bg-blue-50/30"
                   onMouseEnter={() => setHoveredCard(course.id)}
                   onMouseLeave={() => setHoveredCard(null)}
                 >
