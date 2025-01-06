@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { web3Contract, type Course } from "@/lib/web3/contract-utils";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
@@ -12,7 +12,7 @@ interface CourseData extends Course {
   hasPurchased?: boolean;
 }
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const { toast } = useToast();
@@ -147,5 +147,12 @@ export default function SearchPage() {
       </div>
       <Toaster />
     </div>
+  );
+}
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchContent />
+    </Suspense>
   );
 }
