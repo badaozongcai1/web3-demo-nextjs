@@ -1,29 +1,25 @@
 // src/components/web3/WalletConnectionSelector.tsx
 "use client";
 
-import { useState } from "react";
+import { useAtom } from "jotai";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { WalletButton as WagmiWalletButton } from "./wagmi/WalletButton";
-import { WalletButton as Web3ReactWalletButton } from "./web3react/WalletButton";
+import { walletProviderAtom } from "@/store/wallet";
 
 export function WalletConnectionSelector() {
-  const [connectionType, setConnectionType] = useState<"wagmi" | "web3-react">(
-    "wagmi"
-  );
+  const [walletProvider, setWalletProvider] = useAtom(walletProviderAtom);
 
   return (
     <Card className="mb-8">
       <CardHeader>
-        <CardTitle>选择连接钱包方式</CardTitle>
+        <CardTitle>请选择</CardTitle>
       </CardHeader>
       <CardContent>
         <RadioGroup
-          defaultValue="wagmi"
-          value={connectionType}
+          value={walletProvider}
           onValueChange={(value) =>
-            setConnectionType(value as "wagmi" | "web3-react")
+            setWalletProvider(value as "wagmi" | "web3-react")
           }
           className="mb-4"
         >
@@ -36,14 +32,6 @@ export function WalletConnectionSelector() {
             <Label htmlFor="web3-react">Web3-React</Label>
           </div>
         </RadioGroup>
-
-        <div className="mt-4">
-          {connectionType === "wagmi" ? (
-            <WagmiWalletButton />
-          ) : (
-            <Web3ReactWalletButton />
-          )}
-        </div>
       </CardContent>
     </Card>
   );

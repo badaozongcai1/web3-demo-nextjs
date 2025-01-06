@@ -1,11 +1,16 @@
+// src/components/Header.tsx
 "use client";
-import React, { useEffect } from "react";
-import { Search } from "lucide-react";
+import React from "react";
 import Link from "next/link";
-import { WalletButton } from "./web3/wagmi/WalletButton";
 import { motion } from "framer-motion";
+import { useAtom } from "jotai";
+import { WalletButton as WagmiWalletButton } from "./web3/wagmi/WalletButton";
+import { WalletButton as Web3ReactWalletButton } from "./web3/web3react/WalletButton";
+import { walletProviderAtom } from "@/store/wallet";
 
 const Header = () => {
+  const [walletProvider] = useAtom(walletProviderAtom);
+
   return (
     <header className="border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3">
@@ -53,7 +58,11 @@ const Header = () => {
                 </motion.div>
               ))}
             </nav>
-            <WalletButton />
+            {walletProvider === "wagmi" ? (
+              <WagmiWalletButton />
+            ) : (
+              <Web3ReactWalletButton />
+            )}
           </div>
         </div>
       </div>

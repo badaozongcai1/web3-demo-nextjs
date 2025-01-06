@@ -36,7 +36,7 @@ export class Web3Contract {
     }
 
     try {
-      debugger;
+      // debugger;
       //任何遵循 EIP-1193 标准的以太坊钱包
 
       await win.ethereum.request({ method: "eth_requestAccounts" });
