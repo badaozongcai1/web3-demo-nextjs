@@ -5,11 +5,11 @@ import { type ReactNode, useEffect } from "react";
 import {
   metaMask,
   hooks as metaMaskHooks,
-} from "@/lib/web3/connectors/metaMask";
+} from "@/lib/web3/web3react/connectors/metaMask";
 import {
   walletConnectV2,
   hooks as walletConnectV2Hooks,
-} from "@/lib/web3/connectors/walletConnectV2";
+} from "@/lib/web3/web3react/connectors/walletConnectV2";
 
 const connectors: [any, any][] = [
   [metaMask, metaMaskHooks],

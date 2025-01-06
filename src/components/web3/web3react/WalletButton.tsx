@@ -7,9 +7,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { metaMask } from "@/lib/web3/connectors/metaMask";
-import { walletConnectV2 } from "@/lib/web3/connectors/walletConnectV2";
-import { shortenAddress } from "@/lib/web3/utils";
+import { metaMask } from "@/lib/web3/web3react/connectors/metaMask";
+import { walletConnectV2 } from "@/lib/web3/web3react/connectors/walletConnectV2";
+import { shortenAddress } from "@/lib/web3/web3react/utils";
 import { useState, useEffect } from "react";
 import { type ReactNode } from "react";
 
