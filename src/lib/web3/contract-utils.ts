@@ -8,7 +8,7 @@ import {
 
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum?: Record<string, unknown>;
   }
 }
 interface Course {
