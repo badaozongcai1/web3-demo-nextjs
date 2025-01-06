@@ -4,7 +4,7 @@ import {
   YiDengToken__factory,
   CourseMarket,
   YiDengToken,
-} from "../../types/typechain-types";
+} from "@/lib/web3/typechain-types";
 type WindowWithEthereum = Window & {
   ethereum?: any;
 };
