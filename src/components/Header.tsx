@@ -35,7 +35,7 @@ const Header = () => {
             <nav className="flex items-center space-x-6">
               {[
                 { href: "/management", label: "后台管理" },
-                { href: "/courses", label: "我的课程" },
+                { href: "/profile", label: "个人中心" },
               ].map((item, index) => (
                 <motion.div
                   key={item.href}
