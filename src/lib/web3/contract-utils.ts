@@ -5,12 +5,9 @@ import {
   CourseMarket,
   YiDengToken,
 } from "../../types/typechain-types";
-
-declare global {
-  interface Window {
-    ethereum?: any;
-  }
-}
+type WindowWithEthereum = Window & {
+  ethereum?: any;
+};
 interface Course {
   web2CourseId: string;
   name: string;
@@ -28,15 +25,22 @@ export class Web3Contract {
   private signer: ethers.Signer | null = null;
 
   async connect() {
-    if (typeof window === "undefined" || !window.ethereum) {
+    if (typeof window === "undefined") {
+      throw new Error("Browser environment required");
+    }
+
+    // 使用局部类型
+    const win = window as WindowWithEthereum;
+    if (!win.ethereum) {
       throw new Error("Please install MetaMask!");
     }
 
     try {
       debugger;
       //任何遵循 EIP-1193 标准的以太坊钱包
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-      const provider = new ethers.BrowserProvider(window.ethereum);
+
+      await win.ethereum.request({ method: "eth_requestAccounts" });
+      const provider = new ethers.BrowserProvider(win.ethereum);
       this.signer = await provider.getSigner();
 
       // 初始化合约
