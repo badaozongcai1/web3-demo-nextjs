@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   duration?: number;
@@ -12,32 +12,30 @@ export default function AnimatedBackground({
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isRunning = useRef(true);
+  // 添加状态来控制 canvas 的显示/隐藏
+  const [showCanvas, setShowCanvas] = useState(true);
 
   useEffect(() => {
     if (!canvasRef.current) return;
 
     const d = canvasRef.current;
-    const ctx = d.getContext("2d", { alpha: true }); // 启用 alpha 通道
+    const ctx = d.getContext("2d", { alpha: true });
     if (!ctx) return;
 
-    // 初始化设置
     let w = (d.width = window.innerWidth);
     let h = (d.height = window.innerHeight);
 
-    // 参数设置
     const total = (w / 8) | 0;
     const acceleration = 0.05;
-    const lineAlpha = 0.05; // 稍微增加线条透明度
+    const lineAlpha = 0.05;
     const range = 25;
 
-    // 计算和数组初始化
     const size = w / total;
     const occupation = w / total;
     const colors: number[] = [];
     const dots: number[] = [];
     const dotsVel: number[] = [];
 
-    // 初始化点的属性
     const portion = 360 / total;
     for (let i = 0; i < total; ++i) {
       colors[i] = portion * i;
@@ -45,14 +43,12 @@ export default function AnimatedBackground({
       dotsVel[i] = 10;
     }
 
-    // 动画函数
     let animationFrameId: number;
     function anim() {
       if (!ctx || !isRunning.current) return;
 
       animationFrameId = window.requestAnimationFrame(anim);
 
-      // 使用完全透明的背景清除画布
       ctx.clearRect(0, 0, w, h);
 
       for (let i = 0; i < total; ++i) {
@@ -76,28 +72,25 @@ export default function AnimatedBackground({
       }
     }
 
-    // 处理窗口大小变化
     const handleResize = () => {
       w = d.width = window.innerWidth;
       h = d.height = window.innerHeight;
     };
 
-    // 开始动画
     anim();
 
-    // 添加窗口大小变化监听
     window.addEventListener("resize", handleResize);
 
-    // 设置定时器在指定时间后停止动画并调用完成回调
     const timer = setTimeout(() => {
       isRunning.current = false;
       if (onComplete) {
         onComplete();
       }
       ctx.clearRect(0, 0, w, h);
+      // 动画完成后，设置 showCanvas 为 false，从而移除 canvas 元素
+      setShowCanvas(false);
     }, duration);
 
-    // 清理函数
     return () => {
       isRunning.current = false;
       window.removeEventListener("resize", handleResize);
@@ -109,10 +102,11 @@ export default function AnimatedBackground({
     };
   }, [duration, onComplete]);
 
-  return (
+  // 只在 showCanvas 为 true 时渲染 canvas 元素
+  return showCanvas ? (
     <canvas
       ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full z-[0]"
     />
-  );
+  ) : null;
 }
