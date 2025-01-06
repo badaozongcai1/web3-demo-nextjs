@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { web3Contract } from "@/lib/web3/contract-utils";
+import { web3Contract } from "@/lib/web3/ethers/contract-utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
@@ -35,7 +35,7 @@ export default function CoursePurchase({
         ]);
         setHasPurchased(status);
         console.log(balance);
-        
+
         setTokenBalance(balance);
       } catch (err) {
         console.error("Error initializing:", err);

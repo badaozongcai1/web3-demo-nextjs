@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
-import { web3Contract, type Course } from "@/lib/web3/contract-utils";
+import { web3Contract, type Course } from "@/lib/web3/ethers/contract-utils";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { CourseFilter } from "@/components/course/CourseFilter";

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { web3Contract } from "@/lib/web3/contract-utils";
-import type { Course } from "@/lib/web3/contract-utils";
+import { web3Contract } from "@/lib/web3/ethers/contract-utils";
+import type { Course } from "@/lib/web3/ethers/contract-utils";
 import CoursePurchase from "./course-purchase";
 import { Skeleton } from "@/components/ui/skeleton";
 

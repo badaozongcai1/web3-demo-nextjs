@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2, Star } from "lucide-react";
-import { Course } from "@/lib/web3/contract-utils";
+import { Course } from "@/lib/web3/ethers/contract-utils";
 
 interface CourseData extends Course {
   hasPurchased?: boolean;
@@ -16,7 +16,11 @@ interface CourseListProps {
   onPurchase: (course: CourseData) => Promise<void>;
 }
 
-export function CourseList({ courses, isLoading, onPurchase }: CourseListProps) {
+export function CourseList({
+  courses,
+  isLoading,
+  onPurchase,
+}: CourseListProps) {
   const renderStars = (rating: number) => {
     return (
       <div className="flex items-center">
@@ -26,8 +30,8 @@ export function CourseList({ courses, isLoading, onPurchase }: CourseListProps) 
             size={16}
             className={`${
               i < Math.floor(rating)
-                ? 'text-yellow-400 fill-yellow-400'
-                : 'text-gray-300'
+                ? "text-yellow-400 fill-yellow-400"
+                : "text-gray-300"
             }`}
           />
         ))}
@@ -44,7 +48,7 @@ export function CourseList({ courses, isLoading, onPurchase }: CourseListProps) 
         </span>
       );
     }
-    
+
     if (course.isActive) {
       return (
         <span className="px-2 py-1 bg-green-100 text-green-800 rounded">
@@ -54,9 +58,7 @@ export function CourseList({ courses, isLoading, onPurchase }: CourseListProps) 
     }
 
     return (
-      <span className="px-2 py-1 bg-red-100 text-red-800 rounded">
-        已下架
-      </span>
+      <span className="px-2 py-1 bg-red-100 text-red-800 rounded">已下架</span>
     );
   };
 
@@ -88,12 +90,11 @@ export function CourseList({ courses, isLoading, onPurchase }: CourseListProps) 
           <CardContent className="p-6">
             <div className="flex gap-6">
               <div className="w-48 h-48 bg-gray-100 rounded-lg flex-shrink-0 flex items-center justify-center">
-            
-                <img 
-                    src="/demo.svg" 
-                    alt="课程示例图片" 
-                    className="w-full rounded-lg mb-4 object-cover"
-                  />
+                <img
+                  src="/demo.svg"
+                  alt="课程示例图片"
+                  className="w-full rounded-lg mb-4 object-cover"
+                />
               </div>
               <div className="flex-1">
                 <h3 className="text-xl font-bold mb-2">{course.name}</h3>
