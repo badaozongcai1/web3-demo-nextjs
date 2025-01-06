@@ -94,7 +94,7 @@ export default function AddCourse() {
   if (!isOwner) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <Card className="w-full max-w-md mx-auto bg-white/80 backdrop-blur shadow-xl">
+        <Card className="w-full max-w-md mx-auto bg-white dark:bg-gray-800 bg-white/80 backdrop-blur shadow-xl">
           <CardContent className="pt-6">
             <p className="text-center text-gray-500">
               只有合约所有者才能添加课程。
@@ -107,7 +107,7 @@ export default function AddCourse() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Card className="w-full max-w-md mx-auto bg-white/80 backdrop-blur shadow-xl">
+      <Card className="w-full max-w-md mx-auto bg-white dark:bg-gray-800 bg-white/80 backdrop-blur shadow-xl">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
             添加新课程
@@ -116,7 +116,10 @@ export default function AddCourse() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="web2CourseId" className="text-gray-700">
+              <Label
+                htmlFor="web2CourseId"
+                className="text-gray-700 dark:text-white"
+              >
                 课程 ID
               </Label>
               <Input
@@ -131,7 +134,7 @@ export default function AddCourse() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-gray-700">
+              <Label htmlFor="name" className="text-gray-700 dark:text-white">
                 课程名称
               </Label>
               <Input
@@ -146,7 +149,7 @@ export default function AddCourse() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="price" className="text-gray-700">
+              <Label htmlFor="price" className="text-gray-700 dark:text-white">
                 价格 (YD)
               </Label>
               <Input

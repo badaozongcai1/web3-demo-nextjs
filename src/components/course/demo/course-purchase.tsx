@@ -107,7 +107,7 @@ export default function CoursePurchase({
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto bg-white dark:bg-gray-800">
       <CardHeader>
         <CardTitle>{name}</CardTitle>
       </CardHeader>

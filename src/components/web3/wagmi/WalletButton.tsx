@@ -12,6 +12,7 @@ import { modal } from "./config/appkit";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import Jazzicon from "@/components/web3/Jazzicon";
+import { WalletDropdown } from "./WalletDropdown";
 // 使用 wagmi 的类型
 interface TokenConfig {
   address: Address;
@@ -76,18 +77,18 @@ export function WalletButton() {
         >
           <div className="flex items-center gap-3">
             {currentChain && (
-              <div className="w-6 h-6 shadow-sm rounded-full overflow-hidden">
+              <div className="w-6 h-6 shadow-sm rounded-full overflow-hidden text-white">
                 {currentChain.id === 1 ? (
                   // <img
                   //   src="data:image/png;base64,..." // 原有的 base64
                   //   alt="Ethereum"
                   //   className="w-full h-full object-cover"
                   // />
-                  <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                  <div className="w-full h-full bg-gradient-to-br from-gray-100 to-purple-500 flex items-center justify-center">
                     <span className="text-xs font-medium">E</span>
                   </div>
                 ) : currentChain.id === 11155111 ? (
-                  <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                  <div className="w-full h-full bg-gradient-to-br from-gray-100 to-purple-500 flex items-center justify-center">
                     <span className="text-xs font-medium">S</span>
                   </div>
                 ) : null}
@@ -95,7 +96,7 @@ export function WalletButton() {
             )}
             <div className="flex flex-col items-start">
               <div className="flex items-center gap-1">
-                <span className="font-medium text-sm leading-none">
+                <span className="font-medium text-sm leading-none text-black">
                   {balance
                     ? `${parseFloat(balance?.formatted).toFixed(3)} ${
                         balance?.symbol
@@ -113,18 +114,19 @@ export function WalletButton() {
             </div>
           </div>
         </Button>
-
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleOpenAccountModal}
-          className="rounded-none h-10 flex items-center gap-2 rounded-r-xl bg-gradient-to-r from-violet-100 to-purple-100 hover:from-violet-200 hover:to-purple-200 pl-3 pr-4 -ml-px shadow-sm"
-        >
-          <Jazzicon address={address} size={20} />
-          <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-purple-600">
-            {formatAddress(address)}
-          </span>
-        </Button>
+        <WalletDropdown>
+          <Button
+            variant="ghost"
+            size="sm"
+            // onClick={handleOpenAccountModal}
+            className="rounded-none h-10 flex items-center gap-2 rounded-r-xl bg-gradient-to-r from-violet-100 to-purple-100 hover:from-violet-200 hover:to-purple-200 pl-3 pr-4 -ml-px shadow-sm"
+          >
+            <Jazzicon address={address} size={20} />
+            <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-purple-600">
+              {formatAddress(address)}
+            </span>
+          </Button>
+        </WalletDropdown>
       </motion.div>
     );
   }

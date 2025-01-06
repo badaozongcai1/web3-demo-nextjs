@@ -67,7 +67,7 @@ const UserProfile = () => {
   return (
     <div className="container mx-auto py-8 space-y-6">
       {/* 个人信息卡片 */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-violet-500 to-purple-500">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 dark:from-violet-600 dark:to-purple-600">
         {/* 装饰性背景元素 */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 to-purple-500/20 backdrop-blur-sm" />
@@ -153,14 +153,19 @@ const UserProfile = () => {
       {/* 学习指标卡片 */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {learningMetrics.map((metric, index) => (
-          <Card key={index} className="bg-white/80 backdrop-blur">
+          <Card
+            key={index}
+            className="bg-white/80 dark:bg-gray-800/80 backdrop-blur"
+          >
             <CardContent className="p-6">
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-violet-100 rounded-lg">
                   <metric.icon className="w-6 h-6 text-violet-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">{metric.label}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    {metric.label}
+                  </p>
                   <p className="text-xl font-bold">{metric.value}</p>
                 </div>
               </div>
@@ -170,7 +175,7 @@ const UserProfile = () => {
       </div>
 
       {/* 已购课程卡片 */}
-      <Card className="bg-white/80 backdrop-blur">
+      <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur">
         <CardHeader>
           <CardTitle>已购课程</CardTitle>
         </CardHeader>
@@ -192,7 +197,7 @@ const UserProfile = () => {
                         style={{ width: `${course.progress}%` }}
                       />
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
                       进度：{course.progress}%
                     </p>
                     <p className="text-sm text-gray-500">
@@ -207,7 +212,7 @@ const UserProfile = () => {
       </Card>
 
       {/* NFT 证书卡片 */}
-      <Card className="bg-white/80 backdrop-blur">
+      <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur">
         <CardHeader>
           <CardTitle>NFT 证书</CardTitle>
         </CardHeader>
@@ -222,7 +227,7 @@ const UserProfile = () => {
                 />
                 <CardContent className="p-4">
                   <h3 className="font-semibold mb-2">{cert.name}</h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     发放日期：{cert.issueDate}
                   </p>
                   <p className="text-sm text-gray-500">

@@ -40,8 +40,8 @@ export default function CourseList() {
   if (loading) {
     return (
       <div className="space-y-4">
-        <Skeleton className="h-[200px] w-full max-w-md mx-auto rounded-lg" />
-        <Skeleton className="h-[200px] w-full max-w-md mx-auto rounded-lg" />
+        <Skeleton className="h-[200px] w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg" />
+        <Skeleton className="h-[200px] w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg" />
       </div>
     );
   }
