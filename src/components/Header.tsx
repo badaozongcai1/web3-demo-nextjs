@@ -1,15 +1,31 @@
-// src/components/Header.tsx
 "use client";
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
+import { Menu } from "lucide-react";
 import { WalletButton as WagmiWalletButton } from "./web3/wagmi/WalletButton";
 import { WalletButton as Web3ReactWalletButton } from "./web3/web3react/WalletButton";
 import { walletProviderAtom } from "@/store/wallet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+  SheetHeader,
+  SheetDescription,
+} from "@/components/ui/sheet";
+
+const navItems = [
+  { href: "/management", label: "后台管理" },
+  { href: "/profile", label: "个人中心" },
+];
 
 const Header = () => {
   const [walletProvider] = useAtom(walletProviderAtom);
+
+  const WalletButtonComponent =
+    walletProvider === "wagmi" ? WagmiWalletButton : Web3ReactWalletButton;
 
   return (
     <header className="border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
@@ -35,13 +51,10 @@ const Header = () => {
             </motion.span>
           </Link>
 
-          {/* Navigation + Wallet Button */}
-          <div className="flex items-center space-x-8">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
             <nav className="flex items-center space-x-6">
-              {[
-                { href: "/management", label: "后台管理" },
-                { href: "/profile", label: "个人中心" },
-              ].map((item, index) => (
+              {navItems.map((item, index) => (
                 <motion.div
                   key={item.href}
                   initial={{ y: -20, opacity: 0 }}
@@ -58,11 +71,43 @@ const Header = () => {
                 </motion.div>
               ))}
             </nav>
-            {walletProvider === "wagmi" ? (
-              <WagmiWalletButton />
-            ) : (
-              <Web3ReactWalletButton />
-            )}
+            <WalletButtonComponent />
+          </div>
+
+          {/* Mobile Menu */}
+          <div className="md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <button
+                  className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  aria-label="打开菜单"
+                >
+                  <Menu className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+                </button>
+              </SheetTrigger>
+              <SheetContent className="w-[80vw] sm:w-[380px]">
+                <SheetHeader>
+                  <SheetTitle className="text-lg font-semibold mb-4">
+                    导航菜单
+                  </SheetTitle>
+                  <SheetDescription>点击选择菜单</SheetDescription>
+                </SheetHeader>
+                <nav className="flex flex-col">
+                  {navItems.map((item, index) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="px-4 py-3 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                  <div className="mt-6 px-4">
+                    <WalletButtonComponent />
+                  </div>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
